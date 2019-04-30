@@ -1,0 +1,76 @@
+month,year,text,title,lon,lat,Faye,city,star
+,,Berlin,,-6,22.5,FALSE,TRUE,FLASE
+,,Bialytstok,,0.4,23.3,FALSE,TRUE,FLASE
+,,Budapest,,-1.4,17.9,FALSE,TRUE,FLASE
+,,Kiev,,7.9,20.2,FALSE,TRUE,FLASE
+,,Krakow,,-0.9,20,FALSE,TRUE,FLASE
+,,Lenin,,2.4,22.7,FALSE,TRUE,TRUE
+,,Lodz,,-2.1,22.3,FALSE,TRUE,FLASE
+,,Lvov,,2.2,21.4,FALSE,TRUE,FLASE
+,,Minsk,,3.1,24.65,FALSE,TRUE,FLASE
+,,Moscow,,9,28.2,FALSE,TRUE,FLASE
+,,Pinsk,,2,22.4,FALSE,TRUE,FLASE
+,,Prague,,-4.88,20.19,FALSE,TRUE,FLASE
+,,Vienna,,0.4,23,FALSE,TRUE,FLASE
+,,Warsaw,,0,22.3,FALSE,TRUE,FLASE
+,,Bucharest,,4.5,15.5,FALSE,TRUE,FLASE
+,,Paris,,-12.7,18.8,FALSE,TRUE,FLASE
+,,London,,-14.6,21.3,FALSE,TRUE,FLASE
+4,1940,"Germany invades Denmark, they capitulate after two hours",4/9/1940,-8.5,24.7,FALSE,FALSE,FLASE
+5,1940,Germany invades the Netherlands,5/10/1940,-10.1,22,FALSE,FALSE,FLASE
+5,1940,Germany invades Belgium,5/10/1940,-10.6,20.2,FALSE,FALSE,FLASE
+5,1940,Germany invades Luxembourg,5/10/1940,-10.47,19.7,FALSE,FALSE,FLASE
+5,1940,Germany invades France,5/10/1940,-11,18.83,FALSE,FALSE,FLASE
+8,1940,Baltic States were annexed by USSR,8/1/1940,1,28,FALSE,FALSE,FLASE
+9,1940,"Romania was taken over by pro-Nazi ""Ironguard"" forces",9/4/1940,4.5,15.5,FALSE,FALSE,FLASE
+9,1940,Bulgaria annexed a region of Southern Romania,9/7/1940,5.17,15,FALSE,FALSE,FLASE
+4,1941,Germany and Italy invade Yugoslavia,4/6/1941,-4,15.75,FALSE,FALSE,FLASE
+4,1941,Germany and Italy invade Greece,4/6/1941,1.3,10.8,FALSE,FALSE,FLASE
+6,1941,Germany captures Minsk in the USSR (modern Belarus),6/29/1941,3.1,24.65,FALSE,FALSE,FLASE
+8,1941,Germany captures Kiev in the USSR (modern Ukraine),8/16/1941,7.9,20.2,FALSE,FALSE,FLASE
+8,1941,Germany begins a siege of Leningrad,8/16/1941,3.58,31,FALSE,FALSE,FLASE
+10,1941,"Russian mud season (Rasputitsa) begins, greatly slowing Nazi advance",10/7/1941,6.5,25,FALSE,FALSE,FLASE
+12,1941,German troops are a mere 19 miles from Red Square in Moscow,12/4/1941,9,28.2,FALSE,FALSE,FLASE
+12,1941,"Germans halt advance, Soviets launch first successful counterattack and begin beating Germans back",12/5/1941,8.5,28,FALSE,FALSE,FLASE
+12,1941,Hitler sacks 37 of his top commanders for failure in USSR,12/19/1941,-6,22.5,FALSE,FALSE,FLASE
+11,1942,Soviets surround Germans in Stalingrad,11/23/1942,17,19,FALSE,FALSE,FLASE
+1,1943,German forces in Stalingrad surrender,1/31/1943,17.1,19.1,FALSE,FALSE,FLASE
+7,1943,Allies land in Sicily,7/9/1943,-4.3,7.3,FALSE,FALSE,FLASE
+11,1943,Soviets retake Kiev in the Ukraine,11/6/1943,7.9,20.2,FALSE,FALSE,FLASE
+1,1944,Soviets begin marching into Poland,1/7/1944,2.7,23.2,FALSE,FALSE,FLASE
+1,1944,Soviets relieve Leningrad after nearly 900 days under siege,1/27/1944,3.58,31,FALSE,FALSE,FLASE
+6,1944,Allies launch D-Day and land in Northern France,6/6/1944,-14.9,19,FALSE,FALSE,FLASE
+7,1944,Soviets retake Minsk,7/3/1944,3.1,24.65,FALSE,FALSE,FLASE
+7,1944,"Allies retake Caen, France",7/9/1944,-14.5,19.1,FALSE,FALSE,FLASE
+8,1944,Romania leaves the Axis and declares war on Nazi Germany,8/23/1940,4.5,15.5,FALSE,FALSE,FLASE
+8,1944,Allies liberate Paris,8/25/1944,-12.7,18.8,FALSE,FALSE,FLASE
+8,1944,Soviets capture Bucharest (capital of Romania),8/31/1944,4.5,15.5,FALSE,FALSE,FLASE
+9,1944,Soviets occupy Estonia,9/26/1944,1,29.5,FALSE,FALSE,FLASE
+12,1944,Battle of the Bulge begins as Germans attempt last ditch Western offensive,12/16/1944,-10.4,20.1,FALSE,FALSE,FLASE
+1,1945,Soviets capture Warsaw (capital of Poland),1/17/1945,0,22.3,FALSE,FALSE,FLASE
+1,1945,Soviets liberate Auschwitz,1/26/1945,-1.6,20.2,FALSE,FALSE,FLASE
+3,1945,Allies take Cologne,3/7/1945,-9.9,20.3,FALSE,FALSE,FLASE
+3,1945,Soviets capture Danzig,3/30/1945,-2.33,24.4,FALSE,FALSE,FLASE
+4,1945,Allies liberate Buchenwald and President Roosevelt dies,4/12/1945,-7.4,20.9,FALSE,FALSE,FLASE
+4,1945,Soviets reach Berlin,4/21/1945,-6,22.5,FALSE,FALSE,FLASE
+4,1945,Mussolini is captured and hanged by partisans in Northen Italy,4/28/1945,-8,14.6,FALSE,FALSE,FLASE
+4,1945,Allies liberate Dachau,4/29/1945,-7.3,17.7,FALSE,FALSE,FLASE
+4,1945,Hitler commits suicide,4/30/1945,-6,22.5,FALSE,FALSE,FLASE
+5,1945,German forces in Italy surrender,5/2/1945,-7.1,15.3,FALSE,FALSE,FLASE
+5,1945,Germany unconditionally surrenders (VE Day),5/8/1945,-7.4,22.3,FALSE,FALSE,FLASE
+9,1939,"The Nazis invade Poland with the Soviet Union and the country is divided between Nazi Germany in the West and the Soviet Union in the East; Lenin falls under Soviet occupation. 
+""For the time being, the Soviet Union assumed control of the eastern side of the country, and the Nazis occupied the western side. Poland, as we had known it, no longer existed. We found ourselves under Soviet rule"" (51).",10/6/1939,-2.7,22.5,TRUE,FALSE,FLASE
+6,1941,"Nazi forces attacked Soviet-occupied Poland and the Soviet Union ""That night a strange commotion woke me up...For the first time, I felt the penetrating bitterness and horror of war. Little did I know there was far worse to come"" (63-64).",4/24/1905,0,22.2,TRUE,FALSE,FLASE
+5,1942,"The Nazis created a ghetto in Lenin. 
+""With no advance warning, they forced the Jewish population out of their own homes and into an old Jewish part of town in an area as small as two city blocks. Fifty to sixty people were crowded into each small house. Close to two thousand people were crammed into those few houses.""",5/10/1942,2.4,22.7,TRUE,FALSE,FLASE
+8,1942,"Faye is told to leave her camera at Gestapo headquarters.
+""The Nazis knew the next morning would be our last"" (85) 
+
+
+The Jewish ghetto in Lenin is liquidated; 1850 Jews are murdered, shot and buried in three mass graves. Faye is one of 27 people who survive this massacre.
+""All were killed and buried in those three long trenches, including my father, my mother, my little brother Boruch and both my sisters Sonia and Esther, Esther's husband, as well as Sonia's two children... The Nazis did not waste bullets on children...One thousand eight hundred and fifty Jewish people were executed...""",8/13/1942,2.4,22.7,TRUE,FALSE,FLASE
+9,1942,Faye joins the Partisans,Sep-42,2.3,22.7,TRUE,FALSE,FLASE
+11,1942,"Faye is briefly reunited with her brother Kopel, who also joined a partisan group",11/1/1942,2.5,22.7,TRUE,FALSE,FLASE
+12,1942,"The town of Lenin is razed by the Nazis, and the remaining non-Jewish population is burned to death.",12/1/1942,2.4,22.7,TRUE,FALSE,FLASE
+7,1944,Soviet Troops liberate the Molotava Brigade's territory and the Nazis are driven out. The partisans liberate the city of Pinsk.,7/3/1944,2,22.4,TRUE,FALSE,FLASE
+12,1944,Faye marries Morris Schulman,12/12/1944,2.1,22.4,TRUE,FALSE,FLASE

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Mercator projection</title>
+    <script src="d3.min.js" charset="utf-8"></script>
+    <script src="topojson.min.js"></script>
+    <script src="jQuery.js"></script>
+
+    <style type="text/css">
+
+
+        svg {
+            background-color: #6bd7ff;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #container {
+
+            position: relative;
+            padding: auto;
+            margin: auto;
+            background-color: #6bd7ff;
+        }
+
+        path:hover {
+            fill: rgba(255, 255, 255, 0.2);
+            cursor:pointer;
+            padding: 10px;
+            margin: 10px;
+
+        }
+
+        path {
+            stroke: rgba(0, 0, 0, 0.51);
+            stroke-width: 0.5px;
+        }
+
+        circle:hover {
+            fill: rgb(0, 0, 0);
+            cursor:pointer;
+
+        }
+
+
+        div.tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 20px;
+            font: 18px sans-serif;
+            background: #b3b798;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        #myRange{
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;
+            background: black;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            margin-bottom: 50px;
+        }
+
+        #myRange::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #d9d0c2;
+            cursor: pointer;
+            box-shadow: 0 8px 8px 0  rgba(0,0,0,.6);
+
+        }
+        #slidecontainer{
+            /*border-radius:20px;*/
+            /*background: darkolivegreen;*/
+            /*margin: 20px;*/
+            padding: 50px;
+            padding-top: 0;
+            background: #6bd7ff;
+            font-family: Rift, "Helvetica Neue", "Agency FB", sans-serif;
+
+        }
+        #timelineLabels {
+            background: #6bd7ff;
+            font-family: Rift, "Helvetica Neue", "Agency FB", sans-serif;
+            font-weight: bold;
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end;
+            text-align:center;
+
+        }
+        #ledgend {
+            position: absolute;
+            top: 10px;
+            left:10px;
+            border: 3px solid black;
+            border-radius: 10px;
+            z-index: 2;
+            height: 240px;
+            width: 220px;
+            background: #d9d0c2;
+            box-shadow: 0 8px 8px 0  rgba(0,0,0,.6);
+
+
+        }
+        #date{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: 1px solid black;;
+            border-radius: 10px;
+            z-index: 2;
+            height: 100px;
+            width: 200px;
+            background: #d9d0c2;
+            box-shadow: 0 8px 8px 0  rgba(0,0,0,.6);
+
+        }
+        #datetext{
+            position: absolute;
+            top: 50px;
+            right: 40px;
+            font-family: Rift, "Helvetica Neue", "Agency FB", sans-serif;
+            font-size: 25px;
+            font-weight: bold;
+
+
+        }
+        #date2{
+            font-family: Rift, "Helvetica Neue", "Agency FB", sans-serif;
+            font-size: 16px;
+            padding-top: 10px;
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+
+
+    </style>
+    <script src="jQuery.js"></script>
+</head>
+<div>
+<div id="date"> <div id = "datetext"></div>
+    <div id ="date2"> Events from the current date and past 6 months are shown</div>
+</div>
+
+<div id="ledgend">
+    <div class='my-legend'>
+        <div class='legend-title'>WWII Europe Country Occupations</div>
+        <div class='legend-scale'>
+            <ul class='legend-labels'>
+                <li><span style='background:blue;'></span>Allies</li>
+                <li><span style='background:red;'></span>Axis</li>
+                <li><span style='background:rgba(0, 0, 0, 0.2);'></span>Neutral</li>
+
+            </ul>
+            <ul class='legend-labels2'>
+                <li><span style='background:white;'></span>Important Dates</li>
+                <li><span style='background:orange;'></span>Faye's Hometown</li>
+                <li><span style='background:grey;'></span>Important Cities</li>
+                <li><span style='background:yellow;'></span>Faye's Story</li>
+
+            </ul>
+
+        </div>
+        <!--<div class='legend-source'>Source: <a href="#link to source">Name of source</a></div>-->
+    </div>
+
+    <style type='text/css'>
+        .my-legend .legend-title {
+            font-family: Rift, "Helvetica Neue", "Agency FB", sans-serif;
+            margin: 20px;
+
+            text-align: left;
+            font-weight: bold;
+            font-size: 120%;
+        }
+        .my-legend .legend-scale ul {
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+            margin: 0;
+            margin-left: 20px;
+            margin-bottom: 5px;
+            padding: 0;
+            float: left;
+            list-style: none;
+        }
+        .my-legend .legend-scale ul li {
+            font-size: 80%;
+            list-style: none;
+            margin-left: 0;
+            line-height: 18px;
+            margin-bottom: 2px;
+        }
+        .my-legend ul.legend-labels li span {
+             display: block;
+             float: left;
+             height: 16px;
+             width: 30px;
+             margin-right: 5px;
+             margin-left: 0;
+             border: 1px solid #999;
+         }
+        .my-legend ul.legend-labels2 li span {
+            display: block;
+            float: left;
+            height: 16px;
+            width: 16px;
+            border-radius: 1000px;
+            margin-right: 5px;
+            margin-left: 0;
+            border: 1px solid #999;
+
+        }
+        .my-legend .legend-source {
+            font-size: 70%;
+            color: #999;
+            clear: both;
+        }
+        .my-legend a {
+            color: #777;
+        }
+
+    </style>
+
+</div>
+
+
+<div id="container">
+
+</div>
+    <div id = "timelineLabels">
+        <div style="padding-right: 235px">1938</div>
+        <div style="padding-right: 235px">1939</div>
+        <div style="padding-right: 235px">1940</div>
+        <div style="padding-right: 235px">1941</div>
+        <div style="padding-right: 235px">1942</div>
+        <div style="padding-right: 235px">1943</div>
+        <div style="padding-right: 235px">1944</div>
+        <div style="padding-right: 0">1945</div>
+
+    </div>
+<div id="slidecontainer" style="width: 100%; height: 20px; float: left; color: #FFFFFF">
+     <input type="range" min="0" max="82" value="00" class="slider" id="myRange" style="width: 95%; height: 20px">
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+
+
+    //Width and height
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+
+    //Define map projection
+
+
+    var projection = d3.geoMercator() //utiliser une projection standard pour aplatir les pôles, voir D3 projection plugin
+            .center([ 40321,21619 ]) //comment centrer la carte, longitude, latitude
+            .translate([ w/2, h/2 ]) // centrer l'image obtenue dans le svg
+        .scale([h*1.7]);// zoom, plus la valeur est petit plus le zoom est gros
+
+
+    //Define path generator
+    var path = d3.geoPath()
+        .projection(projection);
+
+    var div = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+    //Create SVG
+    var svg = d3.select("#container")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h-90);
+
+    // when the input range changes update the circle
+
+
+    main();
+    var idleTime = 0;
+    $(document).ready(function () {
+        //Increment the idle time counter every minute.
+        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+        //Zero the idle timer on mouse movement.
+        $(this).mousemove(function (e) {
+            idleTime = 0;
+        });
+        $(this).keypress(function (e) {
+            idleTime = 0;
+        });
+    });
+
+    function timerIncrement() {
+        idleTime = idleTime + 1;
+        if (idleTime > 1) { // 20 minutes
+            window.location.replace('test.html');
+        }
+    }
+    var missing = [];
+
+    function main() {
+        d3.json("newarray.json", function(json) {
+            d3.csv("occupationData.csv", function(data) {
+                d3.csv("eventData.csv", function(eventData){
+
+                    //Bind data and create one path per GeoJSON feature
+                var countriesPath = svg.selectAll("path")
+                    .data(json[0].features)
+                    .enter()
+                    .append("path")
+                    .attr("d", path)
+                    .on("draw", function (d) {
+                        switch (data[document.getElementById("myRange").value][d.properties.Name]) {
+                            case 'N':
+                                d3.select(this).attr("fill", "#766041");
+                                break;
+                            case 'L':
+                                d3.select(this).attr("fill", "rgba(20, 50, 204, 1)");
+                                break;
+                            case 'X':
+                                d3.select(this).attr("fill", "rgba(204, 0, 0, 1)");
+                                break;
+                            case 'S':
+                                d3.select(this).attr("fill", "rgba(0, 120, 256, 1)");
+                                break;
+                            case 'O':
+                                d3.select(this).attr("fill", "rgba(256, 256, 0, 1)");
+                                break;
+                            default:
+                                d3.select(this).attr("fill", "rgba(0, 0, 0, 1)");
+                                if(missing.indexOf(d.properties.Name) === -1) {
+                                    missing.push(d.properties.Name);
+                                }
+
+
+                        }
+                    });
+
+                    var points = svg.selectAll("circle")
+                        .data(eventData).enter()
+                        .append( "cirlce")
+                        .attr("cx", function (d) { return projection([d.lon, d.lat])[0]; })
+                        .attr("cy", function (d) { return projection([d.lon, d.lat])[1]; })
+                        .attr("r", function (d) {
+                            if (d.city === "TRUE"){
+                                return "4px";
+                            } else {
+                                return "8px";
+                            }
+
+                    })
+                        .attr("fill", function (d) {
+                            if(d.Faye === "TRUE") {
+                                return "yellow";
+                            }  else if(d.star === "TRUE") {
+                                return "orange";
+                            } else if(d.city === "TRUE") {
+                                return "grey";
+                            } else {
+                                return "white";
+                            }
+                        })
+                        .on("update", function (d) {
+                            var currentMonth = (parseInt(document.getElementById("myRange").value) + 1) % 12;
+                            var currentYear = Math.floor((parseInt(document.getElementById("myRange").value) + 1) / 12.0) + 1938;
+                            var toMonth = currentMonth + 6;
+                            var toYear = currentYear;
+
+                            if(toMonth > 12) {
+                                toMonth -= 12;
+                                toYear++;
+                            }
+
+                            var currentDate = new Date();
+                            currentDate.setDate(1);
+                            currentDate.setMonth(currentMonth);
+                            currentDate.setFullYear(currentYear);
+
+                            var toDate = new Date();
+                            currentDate.setDate(3);
+                            toDate.setMonth(toMonth);
+                            toDate.setFullYear(toYear);
+
+                            var toCheck = new Date();
+                            currentDate.setDate(2);
+                            toCheck.setMonth(d.month);
+                            toCheck.setFullYear(d.year);
+
+                            //console.log(currentMonth + "/" + currentYear + " to " + toMonth + "/" + toYear + " current: " + d.month + "/" + d.year);
+                            if((toCheck >= currentDate && toCheck < toDate ) || d.city === "TRUE") {
+                                d3.select(this).attr("visibility", "visible");
+                            } else {
+                                d3.select(this).attr("visibility", "hidden");
+                            }
+                        })
+                        .on("mouseover", function(d) {
+                            div.transition()
+                                .duration(200)
+                                .style("opacity", .9);
+                            div.html("<b>" + d.title + "</b><br>" + d.text)
+                                .style("left", (d3.event.pageX) + "px")
+                                .style("top", (d3.event.pageY - 28) + "px");
+                        })
+                        .on("mouseout", function(d) {
+                            div.transition()
+                                .duration(500)
+                                .style("opacity", 0);
+                        });
+
+
+                    datetext.innerHTML = data[document.getElementById("myRange").value]["Month"] + " "+ data[document.getElementById("myRange").value]["Year"] ;
+
+                var countriesText = svg.selectAll("text")
+                    .data(json[0].features)
+                    .enter()
+
+                        .append("text")
+                    .attr("x", function (d) {
+                        return projection(d3.geoCentroid(d))[0];
+                    })
+                    .attr("y", function (d) {
+                        return projection(d3.geoCentroid(d))[1];
+                    })
+                    .text(function (d) {
+                        return d.properties.Name;
+                    }).attr("font-family", "sans-serif")
+                               .attr("font-size", "10px")
+                           .attr("fill", "white")
+                    .attr("opacity", "0.5");
+
+                    points.dispatch("update");
+
+
+                d3.select("#myRange").on("input", function() {
+                    datetext.innerHTML = data[document.getElementById("myRange").value]["Month"] + " "+ data[document.getElementById("myRange").value]["Year"] ;
+
+                    missing = [];
+                    countriesPath = svg.selectAll("path").remove();
+                    countriesText = svg.selectAll("text").remove();
+                    countriesPath = svg.selectAll("path")
+                        .data(json[document.getElementById("myRange").value].features)
+                            .enter()
+                        .append("path")
+                        .attr("d", path)
+                        .on("draw", function (d) {
+                            switch (data[document.getElementById("myRange").value][d.properties.Name]) {
+                                case 'N':
+                                    d3.select(this).attr("fill", "#766041");
+                                    break;
+                                case 'L':
+                                    d3.select(this).attr("fill", "rgba(0, 0, 204, 1)");
+                                    break;
+                                case 'X':
+                                    d3.select(this).attr("fill", "rgba(204, 0, 0, 1)");
+                                    break;
+                                case 'S':
+                                    d3.select(this).attr("fill", "rgba(0, 120, 256, 1)");
+                                    break;
+                                case 'O':
+                                    d3.select(this).attr("fill", "rgba(256, 256, 0, 1)");
+                                    break;
+                                default:
+                                    d3.select(this).attr("fill", "rgba(0, 0, 0, 1)");
+                                    if(missing.indexOf(d.properties.Name) === -1) {
+                                        missing.push(d.properties.Name);
+                                    }
+
+
+                            }
+                        });
+                    countriesText = svg.selectAll("text")
+                        .data(json[document.getElementById("myRange").value].features)
+                        .enter()
+                        .append("text")
+                        .attr("x", function (d) {
+                            return projection(d3.geoCentroid(d))[0];
+                        })
+                        .attr("y", function (d) {
+                            return projection(d3.geoCentroid(d))[1];
+                        })
+                        .text(function (d) {
+                            return d.properties.Name;
+                        }).attr("font-family", "sans-serif")
+                        .attr("font-size", "10px")
+                        .attr("fill", "white")
+                        .attr("opacity", "0.5");
+
+                    countriesPath.dispatch("draw");
+                    points.dispatch("update");
+                    //console.log("Missing occupation data for: " + missing);
+
+                    svg.selectAll("circle").remove();
+                    points = svg.selectAll("circle")
+                        .data(eventData).enter()
+                        .append("circle")
+                        .attr("cx", function (d) { return projection([d.lon, d.lat])[0]; })
+                        .attr("cy", function (d) { return projection([d.lon, d.lat])[1]; })
+                        .attr("r", function (d) {
+                            if (d.city === "TRUE"){
+                                return "6px";
+                            } else {
+                                return "8px";
+                            }
+
+                        })                        .attr("fill", function (d) {
+                            if(d.Faye === "TRUE") {
+                                return "yellow";
+                            }  else if(d.star === "TRUE") {
+                                return "orange";
+                            } else if(d.city === "TRUE") {
+                                return "grey";
+                            } else {
+                                return "white";
+                            }
+                        })
+                        .on("update", function (d) {
+                            var currentMonth = (parseInt(document.getElementById("myRange").value) + 1) % 12;
+                            var currentYear = Math.floor((parseInt(document.getElementById("myRange").value) + 1) / 12.0) + 1938;
+                            var toMonth = currentMonth + 6;
+                            var toYear = currentYear;
+
+                            if(toMonth > 12) {
+                                toMonth -= 12;
+                                toYear++;
+                            }
+
+                            var currentDate = new Date();
+                            currentDate.setDate(1);
+                            currentDate.setMonth(currentMonth);
+                            currentDate.setFullYear(currentYear);
+
+                            var toDate = new Date();
+                            currentDate.setDate(3);
+                            toDate.setMonth(toMonth);
+                            toDate.setFullYear(toYear);
+
+                            var toCheck = new Date();
+                            currentDate.setDate(2);
+                            toCheck.setMonth(d.month);
+                            toCheck.setFullYear(d.year);
+
+                            if(d.city === "TRUE") {
+                                d3.select("text")
+                                    .append("text")
+                                    .attr("x", function (d) {
+                                        return projection([d.lon, d.lat])[0];
+                                    })
+                                    .attr("y", function (d) {
+                                        return projection([d.lon, d.lat])[1];
+                                    })
+                                    .text("hello")
+                                    .attr("font-family", "sans-serif")
+                                    .attr("font-size", "10px")
+                                    .attr("fill", "white")
+                                    .attr("opacity", "0.5");
+                            }
+
+                            //console.log(currentMonth + "/" + currentYear + " to " + toMonth + "/" + toYear + " current: " + d.month + "/" + d.year);
+                            if((toCheck >= currentDate && toCheck < toDate ) || d.city === "TRUE") {
+                                d3.select(this).attr("visibility", "visible");
+                            } else {
+                                d3.select(this).attr("visibility", "hidden");
+                            }
+                        })
+                        .on("mouseover", function(d) {
+                            div.transition()
+                                .duration(200)
+                                .style("opacity", .9);
+                            div.html("<b>" + d.title + "</b><br>" + d.text)
+                                .style("left", (d3.event.pageX) + "px")
+                                .style("top", (d3.event.pageY - 28) + "px");
+                        })
+                        .on("mouseout", function(d) {
+                            div.transition()
+                                .duration(500)
+                                .style("opacity", 0);
+                        });
+
+                    points.dispatch("update");
+
+                });
+
+                countriesPath.dispatch("draw");
+                points.dispatch("update");
+                    d3.select("#myRange").dispatch("input");
+
+                    //console.log("Missing occupation data for: " + missing);
+
+            });
+            });
+
+        });
+    }
+
+
+
+
+
+</script>
+</body>
+</html>
